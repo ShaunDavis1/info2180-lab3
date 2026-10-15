@@ -1,7 +1,7 @@
 // Creating the game board for tic-tac-toe
 document.addEventListener("DOMContentLoaded", function() {
 
-    const squares = document.querySelectorALL("#board div");
+    const squares = document.querySelectorAll("#board div");
 
     squares.forEach(function(square) {
 
