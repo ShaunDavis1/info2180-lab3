@@ -130,3 +130,15 @@ h1 span {
   border: 1px solid var(--lightBlue);
   cursor: pointer;
 }
+
+/* Highlight the winning squares */
+.square.winning-square {
+  background-color: #BBF7D0;
+  border: 3px solid #16a34a;
+  box-sizing: border-box;
+}
+
+/* Keep the winning squares highlighed during the hover */
+.square.winning-square.hover {
+  background-color: #BBF7D0;
+}
