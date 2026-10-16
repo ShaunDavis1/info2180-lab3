@@ -49,6 +49,17 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {
                 currentPlayer = "X";
             }
+
+        // Exercise 3: Mouse enters the square
+        square.addEventListener("mouseenter", function() {
+            square.classList.add("hover");
+        });
+
+        // Mouse leaves the square
+        square.addEventListener("mouseleaves", function() {
+            square.classList.add("hover");
+        });
+        
         });
     });
 });
