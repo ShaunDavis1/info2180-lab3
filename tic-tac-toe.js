@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function() {
 
     // Get all nine squares
@@ -34,18 +33,19 @@ document.addEventListener("DOMContentLoaded", function() {
     // Exercise 4: Check for a winner
     function checkWinner() {
 
+        // Check each winning combination
         for (let combination of winningCombinations) {
 
+            // Extract the three indices
             const [a, b, c] = combination;
 
-            // Check whether all three squares contain
-            // the same player's symbol
+            // Check whether the three positions match
             if (
                 gameState[a] !== "" &&
                 gameState[a] === gameState[b] &&
                 gameState[b] === gameState[c]
             ) {
-                // Return the player and winning positions
+                // Return the winner and winning positions
                 return {
                     player: gameState[a],
                     combination: combination
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
 
-        // Nobody has won
+        // No winner found
         return null;
     }
 
@@ -63,22 +63,22 @@ document.addEventListener("DOMContentLoaded", function() {
         // Exercise 1: Add the square CSS class
         square.classList.add("square");
 
-        // Exercise 2: Handle clicks
+        // Exercise 2 and 6: Handle clicks and prevent cheating
         square.addEventListener("click", function() {
 
-            // Prevent moves in occupied squares
-            // or after the game has ended
+            // Prevent changing an occupied square
+            // or playing after the game ends
             if (gameOver || gameState[index] !== "") {
                 return;
             }
 
-            // Display the current player's symbol
+            // Display X or O
             square.textContent = currentPlayer;
 
-            // Apply the corresponding CSS class
+            // Apply the appropriate CSS class
             square.classList.add(currentPlayer);
 
-            // Record the move in the game state
+            // Save the move in the game state
             gameState[index] = currentPlayer;
 
             // Exercise 4: Check for a winner
@@ -86,27 +86,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
             if (winner !== null) {
 
-                // Display the winner message
+                // Display the winning message
                 status.textContent =
                     `Congratulations! ${winner.player} is the Winner!`;
 
-                // Apply the winner styling
+                // Apply the winning message styling
                 status.classList.add("you-won");
 
-                // Highlight the winning combination
+                // Highlight the three winning squares
                 winner.combination.forEach(function(position) {
-
-                    const winningSquare = squares[position];
-
-                    // Give the winning square a green background
-                    winningSquare.style.backgroundColor = "#BBF7D0";
-
-                    // Add a green border
-                    winningSquare.style.border = "3px solid #16A34A";
-
-                    // Keep its dimensions unchanged
-                    winningSquare.style.boxSizing = "border-box";
-
+                    squares[position].classList.add("winning-square");
                 });
 
                 // End the game
@@ -114,18 +103,17 @@ document.addEventListener("DOMContentLoaded", function() {
                 return;
             }
 
-            // Check for a tie
+            // Extra feature: Check for a tie
             if (gameState.every(function(value) {
                 return value !== "";
             })) {
 
                 status.textContent = "It's a Tie!";
-
                 gameOver = true;
                 return;
             }
 
-            // Alternate between X and O
+            // Alternate players
             if (currentPlayer === "X") {
                 currentPlayer = "O";
             } else {
@@ -137,7 +125,6 @@ document.addEventListener("DOMContentLoaded", function() {
         // Exercise 3: Mouse enters the square
         square.addEventListener("mouseenter", function() {
 
-            // Only apply hover styling while playing
             if (!gameOver) {
                 square.classList.add("hover");
             }
@@ -152,29 +139,31 @@ document.addEventListener("DOMContentLoaded", function() {
     }); // End of squares.forEach()
 
 
-    // Exercise 5: Restart the Game
+    // Exercise 5: Restart the game
     newGameButton.addEventListener("click", function() {
 
-        // Reset the game variables
+        // Reset the current player
         currentPlayer = "X";
 
+        // Reset the game state
         gameState = ["", "", "", "", "", "", "", "", ""];
 
+        // Allow a new game to begin
         gameOver = false;
 
         // Clear all nine squares
         squares.forEach(function(square) {
 
-            // Remove X or O
+            // Remove X and O
             square.textContent = "";
 
-            // Remove player and hover classes
-            square.classList.remove("X", "O", "hover");
-
-            // Remove winning highlight styles
-            square.style.backgroundColor = "";
-            square.style.border = "";
-            square.style.boxSizing = "";
+            // Remove player, hover, and winning classes
+            square.classList.remove(
+                "X",
+                "O",
+                "hover",
+                "winning-square"
+            );
 
         });
 
